@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreeth's Energy Portal - Top 3 Energy Sources Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ===== SPACE THEME ===== */
+        body.space-theme {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        body.space-theme .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* ===== ENERGY THEME ===== */
+        body.energy-theme {
+            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 50%, #90EE90 100%);
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        body.energy-theme::before {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 250px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 250"><path d="M0,150 Q300,100 600,150 T1200,150 L1200,250 L0,250" fill="%23228B22" opacity="0.2"/></svg>');
+            background-repeat: repeat-x;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        body.space-theme nav {
+            background: rgba(10, 14, 39, 0.95);
+            border-bottom: 2px solid #00d4ff;
+        }
+
+        body.energy-theme nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 2px solid #FF6B35;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        body.space-theme .logo {
+            color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+
+        body.energy-theme .logo {
+            color: #FF6B35;
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        body.space-theme .nav-menu a {
+            color: #e0e0e0;
+            border-bottom: 2px solid transparent;
+        }
+
+        body.space-theme .nav-menu a:hover {
+            color: #00d4ff;
+            border-bottom-color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+
+        body.energy-theme .nav-menu a {
+            color: #333;
+            border-bottom: 2px solid transparent;
+        }
+
+        body.energy-theme .nav-menu a:hover {
+            color: #FF6B35;
+            border-bottom-color: #FF6B35;
+        }
+
+        .theme-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn {
+            background: none;
+            border: 2px solid;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        body.space-theme .theme-btn {
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        body.space-theme .theme-btn:hover,
+        body.space-theme .theme-btn.active {
+            background: #00d4ff;
+            color: #0a0e27;
+            box-shadow: 0 0 20px #00d4ff;
+        }
+
+        body.energy-theme .theme-btn {
+            border-color: #FF6B35;
+            color: #FF6B35;
+        }
+
+        body.energy-theme .theme-btn:hover,
+        body.energy-theme .theme-btn.active {
+            background: #FF6B35;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+        }
+
+        /* ===== AUDIO BUTTON ===== */
+        .audio-btn {
+            background: none;
+            border: 2px solid;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.95em;
+            margin: 0 5px;
+        }
+
+        body.space-theme .audio-btn {
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        body.space-theme .audio-btn:hover,
+        body.space-theme .audio-btn.playing {
+            background: #00d4ff;
+            color: #0a0e27;
+            box-shadow: 0 0 20px #00d4ff;
+        }
+
+        body.energy-theme .audio-btn {
+            border-color: #FF6B35;
+            color: #FF6B35;
+        }
+
+        body.energy-theme .audio-btn:hover,
+        body.energy-theme .audio-btn.playing {
+            background: #FF6B35;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            margin-top: 80px;
+            padding: 100px 40px;
+            text-align: center;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            margin-bottom: 60px;
+        }
+
+        body.space-theme .hero {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border: 2px solid #00d4ff;
+        }
+
+        body.energy-theme .hero {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 215, 0, 0.1));
+            border: 2px solid #FF6B35;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        body.space-theme .hero h1 {
+            background: linear-gradient(135deg, #00d4ff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        body.energy-theme .hero h1 {
+            background: linear-gradient(135deg, #FF6B35, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        body.space-theme .hero p {
+            color: #a0a0ff;
+        }
+
+        body.energy-theme .hero p {
+            color: #FF6B35;
+        }
+
+        /* ===== CTA BUTTON ===== */
+        .cta-button {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: 2px solid;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        body.space-theme .cta-button {
+            background: linear-gradient(135deg, #00d4ff, #8a2be2);
+            color: white;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        body.space-theme .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.8);
+        }
+
+        body.energy-theme .cta-button {
+            background: linear-gradient(135deg, #FF6B35, #FFD700);
+            color: white;
+            border-color: #FF6B35;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+
+        body.energy-theme .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255, 107, 53, 0.8);
+        }
+
+        /* ===== SECTION TITLES ===== */
+        h2 {
+            font-size: 2.5em;
+            margin: 60px 0 40px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        body.space-theme h2 {
+            background: linear-gradient(135deg, #00d4ff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.energy-theme h2 {
+            background: linear-gradient(135deg, #FF6B35, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title-audio {
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        /* ===== ENERGY CARDS GRID ===== */
+        .energy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .energy-card {
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 3px solid;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        body.space-theme .energy-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border-color: #00d4ff;
+        }
+
+        body.space-theme .energy-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.3);
+            border-color: #8a2be2;
+        }
+
+        body.energy-theme .energy-card {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 215, 0, 0.1));
+            border-color: #FF6B35;
+        }
+
+        body.energy-theme .energy-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.3);
+            border-color: #FFD700;
+        }
+
+        .energy-card .icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .energy-card h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        body.space-theme .energy-card h3 {
+            color: #00d4ff;
+        }
+
+        body.energy-theme .energy-card h3 {
+            color: #FF6B35;
+        }
+
+        .energy-card p {
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .metric {
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        body.space-theme .metric {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 3px solid #00d4ff;
+        }
+
+        body.energy-theme .metric {
+            background: rgba(255, 107, 53, 0.1);
+            border-left: 3px solid #FF6B35;
+        }
+
+        .metric-label {
+            font-weight: bold;
+            display: block;
+        }
+
+        body.space-theme .metric-label {
+            color: #00d4ff;
+        }
+
+        body.energy-theme .metric-label {
+            color: #FF6B35;
+        }
+
+        .metric-value {
+            display: block;
+            margin-top: 3px;
+        }
+
+        /* ===== DETAIL SECTIONS ===== */
+        .detail-section {
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        body.space-theme .detail-section {
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.8), rgba(26, 31, 58, 0.8));
+            border: 2px solid #00d4ff;
+        }
+
+        body.energy-theme .detail-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+            border: 2px solid #FF6B35;
+            color: #333;
+        }
+
+        .detail-section h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        body.space-theme .detail-section h3 {
+            color: #00d4ff;
+        }
+
+        body.energy-theme .detail-section h3 {
+            color: #FF6B35;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            nav {
+                flex-direction: column;
+                padding: 15px;
+            }
+        }
+
+        .detail-grid h4 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        body.space-theme .detail-grid h4 {
+            color: #00d4ff;
+        }
+
+        body.energy-theme .detail-grid h4 {
+            color: #FF6B35;
+        }
+
+        .detail-grid ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .detail-grid li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .detail-grid li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        body.space-theme .detail-grid li:before {
+            color: #00d4ff;
+        }
+
+        body.energy-theme .detail-grid li:before {
+            color: #FF6B35;
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        body.space-theme .comparison-table {
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.2);
+        }
+
+        body.energy-theme .comparison-table {
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.2);
+        }
+
+        .comparison-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        body.space-theme .comparison-table th {
+            background: linear-gradient(135deg, #00d4ff, #8a2be2);
+            color: white;
+        }
+
+        body.energy-theme .comparison-table th {
+            background: linear-gradient(135deg, #FF6B35, #FFD700);
+            color: white;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid;
+        }
+
+        body.space-theme .comparison-table td {
+            border-bottom-color: rgba(0, 212, 255, 0.3);
+        }
+
+        body.energy-theme .comparison-table td {
+            border-bottom-color: rgba(255, 107, 53, 0.3);
+        }
+
+        /* ===== SOURCES SECTION ===== */
+        .sources-section {
+            display: none;
+        }
+
+        .sources-section.active {
+            display: block;
+        }
+
+        .source-category {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        body.space-theme .source-category {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border: 2px solid #00d4ff;
+        }
+
+        body.energy-theme .source-category {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 215, 0, 0.1));
+            border: 2px solid #FF6B35;
+        }
+
+        .source-category h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        body.space-theme .source-category h3 {
+            color: #00d4ff;
+        }
+
+        body.energy-theme .source-category h3 {
+            color: #FF6B35;
+        }
+
+        .source-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .source-item:before {
+            content: "📄";
+            position: absolute;
+            left: 0;
+        }
+
+        .source-item a {
+            text-decoration: none;
+            transition: all 0.3s;
+            word-break: break-all;
+        }
+
+        body.space-theme .source-item a {
+            color: #00d4ff;
+        }
+
+        body.space-theme .source-item a:hover {
+            text-shadow: 0 0 10px #00d4ff;
+            text-decoration: underline;
+        }
+
+        body.energy-theme .source-item a {
+            color: #FF6B35;
+        }
+
+        body.energy-theme .source-item a:hover {
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+            text-decoration: underline;
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        body.space-theme .stat-box {
+            background: linear-gradient(135deg, #00d4ff, #8a2be2);
+            color: white;
+        }
+
+        body.energy-theme .stat-box {
+            background: linear-gradient(135deg, #FF6B35, #FFD700);
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+
+        /* ===== CONCLUSION BOX ===== */
+        .conclusion-box {
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid;
+        }
+
+        body.space-theme .conclusion-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #00d4ff;
+        }
+
+        body.energy-theme .conclusion-box {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: #FF6B35;
+        }
+
+        .conclusion-box strong {
+            font-size: 1.1em;
+        }
+
+        body.space-theme .conclusion-box strong {
+            color: #00d4ff;
+        }
+
+        body.energy-theme .conclusion-box strong {
+            color: #FF6B35;
+        }
+
+        /* ===== BADGE ===== */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+
+        body.space-theme .badge {
+            background: linear-gradient(135deg, #00d4ff, #8a2be2);
+            color: white;
+        }
+
+        body.energy-theme .badge {
+            background: linear-gradient(135deg, #FF6B35, #FFD700);
+            color: white;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 2px solid;
+        }
+
+        body.space-theme footer {
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        body.energy-theme footer {
+            border-color: #FF6B35;
+            color: #FF6B35;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-menu {
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 50px 20px;
+                margin-top: 120px;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .energy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .theme-btn, .audio-btn {
+                padding: 6px 12px;
+                font-size: 0.85em;
+            }
+        }
+
+        /* ===== SECTION CONTENT ===== */
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== AUDIO INDICATOR ===== */
+        .audio-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+            animation: pulse 1s infinite;
+        }
+
+        body.space-theme .audio-indicator {
+            background: #00d4ff;
+            box-shadow: 0 0 10px #00d4ff;
+        }
+
+        body.energy-theme .audio-indicator {
+            background: #FF6B35;
+            box-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="space-theme">
+    <!-- STARS BACKGROUND -->
+    <div class="stars" id="stars"></div>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo">⚡ SHREETH'S ENERGY PORTAL</div>
+        <ul class="nav-menu">
+            <li><a onclick="showSection('home')">HOME</a></li>
+            <li><a onclick="showSection('top3')">TOP 3 ENERGIES</a></li>
+            <li><a onclick="showSection('nuclear')">NUCLEAR</a></li>
+            <li><a onclick="showSection('wind')">WIND</a></li>
+            <li><a onclick="showSection('hydrogen')">HYDROGEN</a></li>
+            <li><a onclick="showSection('sources')">SOURCES</a></li>
+        </ul>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="audio-btn" onclick="togglePageAudio()">
+                🔊 LISTEN TO PAGE
+            </button>
+            <div class="theme-switcher">
+                <button class="theme-btn active" onclick="switchTheme('space')">🌌 SPACE</button>
+                <button class="theme-btn" onclick="switchTheme('energy')">☀️ ENERGY</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME SECTION -->
+    <div class="section-content active" id="home">
+        <div class="container">
+            <section class="hero">
+                <h1>🌍 HARNESSING ENERGY</h1>
+                <p>A Deep Analysis of the World's Most Promising Energy Sources</p>
+                <p style="font-size: 0.9em; opacity: 0.85;">Section 4.3: Energy Production Research</p>
+                <div style="margin-top: 20px;">
+                    <button class="cta-button" onclick="showSection('top3')">EXPLORE NOW</button>
+                    <button class="audio-btn" onclick="speakText('Welcome to Shreths Energy Portal. A comprehensive analysis of the worlds most promising energy sources. Click explore now to begin your journey.')">
+                        🔊 HEAR INTRO
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- TOP 3 ENERGIES SECTION -->
+    <div class="section-content" id="top3">
+        <div class="container">
+            <h2>
+                🏆 TOP 3 ENERGY SOURCES
+                <span class="section-title-audio">
+                    <button class="audio-btn" onclick="speakText('Top three energy sources: Nuclear Energy, Wind Energy, and Green Hydrogen. Click any card to learn more.')">🔊</button>
+                </span>
+            </h2>
+
+            <div class="energy-grid">
+                <!-- NUCLEAR CARD -->
+                <div class="energy-card" onclick="showSection('nuclear')">
+                    <div class="icon">⚛️</div>
+                    <h3>NUCLEAR ENERGY</h3>
+                    <p>Atomic fission producing reliable baseload power 24/7</p>
+                    <button class="audio-btn" style="margin-top: 10px; width: 100%;" onclick="event.stopPropagation(); speakText('Nuclear Energy: Atomic fission producing reliable baseload power 24/7. Efficiency 33 to 37 percent. Reliability 90 to 95 percent. Cost per megawatt hour: 70 to 150 dollars. Lifespan: 60 plus years. Click to learn more details.')">
+                        🔊 HEAR DETAILS
+                    </button>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-label">Efficiency:</span>
+                            <span class="metric-value">33-37%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Reliability:</span>
+                            <span class="metric-value">90-95% ✓</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost/MWh:</span>
+                            <span class="metric-value">$70-150</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Lifespan:</span>
+                            <span class="metric-value">60+ years</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WIND CARD -->
+                <div class="energy-card" onclick="showSection('wind')">
+                    <div class="icon">💨</div>
+                    <h3>WIND ENERGY</h3>
+                    <p>Kinetic energy from turbines - most efficient renewable</p>
+                    <button class="audio-btn" style="margin-top: 10px; width: 100%;" onclick="event.stopPropagation(); speakText('Wind Energy: Kinetic energy from turbines, the most efficient renewable. Efficiency 35 to 45 percent. Cost per megawatt hour: 30 to 70 dollars. Capacity Factor: 25 to 45 percent. Lifespan: 25 to 35 years. Click to learn more.')">
+                        🔊 HEAR DETAILS
+                    </button>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-label">Efficiency:</span>
+                            <span class="metric-value">35-45%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost/MWh:</span>
+                            <span class="metric-value">$30-70</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Capacity Factor:</span>
+                            <span class="metric-value">25-45%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Lifespan:</span>
+                            <span class="metric-value">25-35 years</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HYDROGEN CARD -->
+                <div class="energy-card" onclick="showSection('hydrogen')">
+                    <div class="icon">🧪</div>
+                    <h3>GREEN HYDROGEN</h3>
+                    <p>Water split with renewables - the storage solution</p>
+                    <button class="audio-btn" style="margin-top: 10px; width: 100%;" onclick="event.stopPropagation(); speakText('Green Hydrogen: Water split with renewables, the storage solution. Efficiency 60 to 85 percent. Current cost: 2.5 to 5 dollars per kilogram. Target cost 2030: 1 to 2 dollars per kilogram. Storage: Hours to months. Click to explore.')">
+                        🔊 HEAR DETAILS
+                    </button>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-label">Efficiency:</span>
+                            <span class="metric-value">60-85%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost Today:</span>
+                            <span class="metric-value">$2.5-5/kg</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost 2030:</span>
+                            <span class="metric-value">$1-2/kg</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Storage:</span>
+                            <span class="metric-value">Hours-months</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUCLEAR DETAILS -->
+    <div class="section-content" id="nuclear">
+        <div class="container">
+            <h2>
+                ⚛️ NUCLEAR ENERGY - DETAILED ANALYSIS
+                <span class="section-title-audio">
+                    <button class="audio-btn" onclick="speakText('Nuclear Energy detailed analysis. What is nuclear energy? Nuclear energy is produced through atomic fission, splitting uranium atoms releases enormous amounts of heat that drive turbines to generate electricity. One uranium pellet contains the energy equivalent of one ton of coal.')">🔊</button>
+                </span>
+            </h2>
+
+            <div class="detail-section">
+                <h3>What is Nuclear Energy?</h3>
+                <p>Nuclear energy is produced through atomic fission - splitting uranium atoms releases enormous amounts of heat that drive turbines to generate electricity. One uranium pellet contains the energy equivalent of 1 ton of coal!
+                    <button class="audio-btn" onclick="speakText('Nuclear energy is produced through atomic fission. Splitting uranium atoms releases enormous amounts of heat that drive turbines to generate electricity. One uranium pellet contains the energy equivalent of one ton of coal.')">🔊</button>
+                </p>
+
+                <div class="detail-grid">
+                    <div>
+                        <h4>✅ Key Advantages</h4>
+                        <ul>
+                            <li>Highest reliability: 90-95% capacity factor (24/7 power)</li>
+                            <li>Zero emissions: Only produces water vapor</li>
+                            <li>Smallest land footprint: 0.5-4 km² per GW</li>
+                            <li>Lowest fuel costs: $0.01/kWh (cheapest!)</li>
+                            <li>Advanced SMRs: Faster, cheaper deployment</li>
+                            <li>Future reactors: Can burn nuclear waste!</li>
+                        </ul>
+                        <button class="audio-btn" onclick="speakText('Key advantages of nuclear energy: Highest reliability with 90 to 95 percent capacity factor for 24 slash 7 power. Zero emissions, only produces water vapor. Smallest land footprint. Lowest fuel costs. Advanced small modular reactors enable faster, cheaper deployment. Future reactors can burn nuclear waste.')">🔊 HEAR ADVANTAGES</button>
+                    </div>
+                    <div>
+                        <h4>⚠️ Challenges</h4>
+                        <ul>
+                            <li>High upfront cost: $5-10B (large), $1-2B (SMR)</li>
+                            <li>Long construction: 10-15 years (traditional), 3-5 (SMR)</li>
+                            <li>Nuclear waste: Requires secure storage (solvable)</li>
+                            <li>Public perception: Fears often exaggerated</li>
+                            <li>Location dependent: Needs cooling water</li>
+                            <li>Regulatory complexity: Multiple approvals needed</li>
+                        </ul>
+                        <button class="audio-btn" onclick="speakText('Challenges of nuclear energy: High upfront cost of 5 to 10 billion dollars for large plants. Long construction time of 10 to 15 years. Nuclear waste requires secure storage. Public perception and fears, though often exaggerated. Location dependent on cooling water availability. Regulatory complexity with multiple approvals needed.')">🔊 HEAR CHALLENGES</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-number">90-95%</div>
+                        <div class="stat-label">Capacity Factor</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">64 GT</div>
+                        <div class="stat-label">CO₂ Prevented</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">$50</div>
+                        <div class="stat-label">Future SMR Cost</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">70+</div>
+                        <div class="stat-label">SMR Projects</div>
+                    </div>
+                </div>
+
+                <div class="conclusion-box">
+                    <strong>Why Nuclear is Essential:</strong> Nuclear provides the 24/7 reliable baseload power needed for stable, decarbonized grids. Advanced SMRs are revolutionizing the industry with faster construction and lower costs. Combined with solar/wind, nuclear creates resilient energy systems.
+                    <br><br>
+                    <button class="audio-btn" onclick="speakText('Why nuclear is essential: Nuclear provides the 24 slash 7 reliable baseload power needed for stable decarbonized grids. Advanced small modular reactors are revolutionizing the industry with faster construction and lower costs. Combined with solar and wind, nuclear creates resilient energy systems.')">🔊 HEAR CONCLUSION</button>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Research Metrics
+                    <button class="audio-btn" onclick="speakText('Nuclear research metrics table. Efficiency: 33 to 37 percent, limited by thermodynamic laws. Capacity Factor: 90 to 95 percent, most reliable energy source. Carbon dioxide emissions: 12 grams CO2 equivalent per kilowatt hour, 1.5 percent of coal emissions. Land use: 0.5 to 4 square kilometers per gigawatt, smallest of all sources. Lifespan: 60 to 80 years, longest of all sources. Safety: 0.07 deaths per terawatt hour, safest energy source.')">🔊</button>
+                </h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Value</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Efficiency</strong></td>
+                            <td>33-37%</td>
+                            <td>Limited by thermodynamic laws (like coal)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capacity Factor</strong></td>
+                            <td>90-95%</td>
+                            <td>Most reliable energy source</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CO₂ Emissions</strong></td>
+                            <td>12 g CO₂eq/kWh</td>
+                            <td>1.5% of coal emissions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Land Use</strong></td>
+                            <td>0.5-4 km²/GW</td>
+                            <td>Smallest of all sources</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lifespan</strong></td>
+                            <td>60-80 years</td>
+                            <td>Longest of all sources</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Safety</strong></td>
+                            <td>0.07 deaths/TWh</td>
+                            <td>Safest energy source</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- WIND DETAILS -->
+    <div class="section-content" id="wind">
+        <div class="container">
+            <h2>
+                💨 WIND ENERGY - DETAILED ANALYSIS
+                <span class="section-title-audio">
+                    <button class="audio-btn" onclick="speakText('Wind Energy detailed analysis. Wind turbines capture kinetic energy from moving air and convert it into electricity. Modern turbines reach 35 to 45 percent efficiency and can generate 10 to 15 megawatts per unit. Wind is the most efficient renewable energy source and fastest growing globally.')">🔊</button>
+                </span>
+            </h2>
+
+            <div class="detail-section">
+                <h3>What is Wind Energy?</h3>
+                <p>Wind turbines capture kinetic energy from moving air and convert it into electricity. Modern turbines reach 35-45% efficiency and can generate 10-15 MW per unit. Wind is the most efficient renewable energy source and fastest-growing globally.
+                    <button class="audio-btn" onclick="speakText('Wind turbines capture kinetic energy from moving air and convert it into electricity. Modern turbines reach 35 to 45 percent efficiency and can generate 10 to 15 megawatts per unit.')">🔊</button>
+                </p>
+
+                <div class="detail-grid">
+                    <div>
+                        <h4>✅ Key Advantages</h4>
+                        <ul>
+                            <li>Highest renewable efficiency: 35-45%</li>
+                            <li>Lowest upfront cost: $1.50-2.00/watt</li>
+                            <li>Zero emissions: Completely clean</li>
+                            <li>Proven technology: 40+ years of history</li>
+                            <li>Land dual-use: Farming possible underneath</li>
+                            <li>Offshore unlimited: Deep-water floating turbines</li>
+                        </ul>
+                        <button class="audio-btn" onclick="speakText('Key advantages of wind energy: Highest renewable efficiency at 35 to 45 percent. Lowest upfront cost at 1.50 to 2 dollars per watt. Zero emissions, completely clean. Proven technology with 40 plus years of history. Land dual-use with farming possible underneath turbines. Offshore wind potential is unlimited with deep water floating turbines.')">🔊 HEAR ADVANTAGES</button>
+                    </div>
+                    <div>
+                        <h4>⚠️ Challenges</h4>
+                        <ul>
+                            <li>Location dependent: Needs consistent wind</li>
+                            <li>Intermittent: Weather dependent</li>
+                            <li>Environmental: Bird/bat concerns (minimal)</li>
+                            <li>Noise: 35-45 dB (conversation level)</li>
+                            <li>Visual impact: Subjective concerns</li>
+                            <li>Blade disposal: Recycling industry emerging</li>
+                        </ul>
+                        <button class="audio-btn" onclick="speakText('Challenges of wind energy: Location dependent, needs consistent wind. Intermittent and weather dependent. Environmental concerns about birds and bats, though minimal. Noise of 35 to 45 decibels at conversation level. Visual impact concerns that are subjective. Blade disposal requires emerging recycling industry.')">🔊 HEAR CHALLENGES</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-number">45%</div>
+                        <div class="stat-label">Best Sites Capacity Factor</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">$0.03</div>
+                        <div class="stat-label">Cost/kWh (25yr)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">2M+</div>
+                        <div class="stat-label">Global Wind Jobs</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">120+</div>
+                        <div class="stat-label">Countries with Wind</div>
+                    </div>
+                </div>
+
+                <div class="conclusion-box">
+                    <strong>Why Wind is Critical:</strong> Wind offers the best efficiency among renewables with proven technology and competitive costs. Offshore wind offers unlimited future potential. Perfect complement to solar for diverse renewable energy grids worldwide.
+                    <br><br>
+                    <button class="audio-btn" onclick="speakText('Why wind is critical: Wind offers the best efficiency among renewables at 35 to 45 percent with proven technology and competitive costs. Offshore wind offers unlimited future potential. Wind is the perfect complement to solar for diverse renewable energy grids worldwide.')">🔊 HEAR CONCLUSION</button>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Research Metrics
+                    <button class="audio-btn" onclick="speakText('Wind research metrics table. Efficiency: 35 to 45 percent, best renewable, approaches Betz limit of 59 percent. Capacity Factor: 25 to 45 percent, varies by location. Carbon dioxide emissions: 11 grams CO2 equivalent per kilowatt hour, 1.3 percent of coal. Land use: 5 to 10 acres per megawatt, dual-use possible at 5 to 10 percent effective use. Lifespan: 25 to 35 years. Cost trend: minus 4 percent per year, rapidly approaching parity with coal.')">🔊</button>
+                </h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Value</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Efficiency</strong></td>
+                            <td>35-45%</td>
+                            <td>Best renewable (approaches Betz limit 59%)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capacity Factor</strong></td>
+                            <td>25-45%</td>
+                            <td>Varies by location</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CO₂ Emissions</strong></td>
+                            <td>11 g CO₂eq/kWh</td>
+                            <td>1.3% of coal emissions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Land Use</strong></td>
+                            <td>5-10 acres/MW*</td>
+                            <td>*Dual-use possible (5-10% effective)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lifespan</strong></td>
+                            <td>25-35 years</td>
+                            <td>Modern turbines last longer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost Trend</strong></td>
+                            <td>-4%/year</td>
+                            <td>Rapidly approaching parity with coal</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- HYDROGEN DETAILS -->
+    <div class="section-content" id="hydrogen">
+        <div class="container">
+            <h2>
+                🧪 GREEN HYDROGEN - EMERGING GAME-CHANGER
+                <span class="section-title-audio">
+                    <button class="audio-btn" onclick="speakText('Green Hydrogen, the emerging game changer. Green hydrogen is produced by splitting water using renewable electricity through electrolysis. The hydrogen gas can be stored for months and used for vehicles, industry, or converted back to electricity when needed.')">🔊</button>
+                </span>
+            </h2>
+
+            <div class="detail-section">
+                <h3>What is Green Hydrogen?</h3>
+                <p>Green hydrogen is produced by splitting water (H₂O) using renewable electricity through electrolysis. The hydrogen gas can be stored for months and used for vehicles, industry, or converted back to electricity when needed. It's the missing link for complete energy decarbonization!
+                    <button class="audio-btn" onclick="speakText('Green hydrogen is produced by splitting water using renewable electricity. The hydrogen gas can be stored for months and used for vehicles, industry, or converted back to electricity when needed. Its the missing link for complete energy decarbonization.')">🔊</button>
+                </p>
+
+                <div class="detail-grid">
+                    <div>
+                        <h4>✅ Key Advantages</h4>
+                        <ul>
+                            <li>Solves intermittency: Stores excess solar/wind energy</li>
+                            <li>Long-term storage: Hours to months (vs battery hours)</li>
+                            <li>Zero emissions: Only produces water when used</li>
+                            <li>Multi-purpose: Vehicles, industry, power generation</li>
+                            <li>Energy carrier: Can be transported globally</li>
+                            <li>Decarbonizes hard sectors: Steel, cement, chemicals</li>
+                        </ul>
+                        <button class="audio-btn" onclick="speakText('Key advantages of green hydrogen: Solves intermittency by storing excess solar and wind energy. Long term storage of hours to months, versus battery hours. Zero emissions, only produces water when used. Multi-purpose for vehicles, industry, and power generation. Can be transported globally as an energy carrier. Decarbonizes hard sectors like steel, cement, and chemicals.')">🔊 HEAR ADVANTAGES</button>
+                    </div>
+                    <div>
+                        <h4>⚠️ Challenges</h4>
+                        <ul>
+                            <li>Production cost: Currently $2.5-5/kg</li>
+                            <li>Infrastructure: Refueling stations needed</li>
+                            <li>Round-trip efficiency: 30-50% (lower than batteries)</li>
+                            <li>Electrolyzer cost: Capital intensive</li>
+                            <li>Supply chain: Still developing</li>
+                            <li>Scale: Needs massive scale-up by 2030</li>
+                        </ul>
+                        <button class="audio-btn" onclick="speakText('Challenges of green hydrogen: High production cost of 2.5 to 5 dollars per kilogram currently. Lack of refueling infrastructure. Lower round trip efficiency of 30 to 50 percent compared to batteries. High electrolyzer costs. Supply chain still developing. Needs massive scale-up by 2030.')">🔊 HEAR CHALLENGES</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-number">60-85%</div>
+                        <div class="stat-label">Fuel Cell Efficiency</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">$1-2/kg</div>
+                        <div class="stat-label">Target 2030</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">Months</div>
+                        <div class="stat-label">Storage Duration</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">70+</div>
+                        <div class="stat-label">Active Projects</div>
+                    </div>
+                </div>
+
+                <div class="conclusion-box">
+                    <strong>Why Hydrogen is Revolutionary:</strong> Green hydrogen enables complete decarbonization of transport and industry. Combined with solar/wind + nuclear, hydrogen creates a fully sustainable energy system. Key to achieving net-zero by 2050!
+                    <br><br>
+                    <button class="audio-btn" onclick="speakText('Why hydrogen is revolutionary: Green hydrogen enables complete decarbonization of transport and industry. Combined with solar, wind, and nuclear, hydrogen creates a fully sustainable energy system. Key to achieving net zero emissions by 2050.')">🔊 HEAR CONCLUSION</button>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>The Future Energy System
+                    <button class="audio-btn" onclick="speakText('The future energy system with green hydrogen. Solar and wind generate cheap electricity during optimal conditions. Excess energy splits water into hydrogen through electrolysis. Hydrogen is stored in tanks for months. Hydrogen powers vehicles, industry, or generates power when needed. Nuclear provides reliable baseload power 24 slash 7. This complete system achieves full decarbonization by 2050.')">🔊</button>
+                </h3>
+                <p style="margin-bottom: 20px;">Green hydrogen integrates solar, wind, and nuclear into one complete system:</p>
+                <ol style="margin-left: 20px; margin-bottom: 20px;">
+                    <li><strong>Solar + Wind:</strong> Generate cheap electricity during optimal conditions</li>
+                    <li><strong>Electrolysis:</strong> Excess energy splits water into hydrogen</li>
+                    <li><strong>Storage:</strong> Hydrogen stored in tanks for months</li>
+                    <li><strong>Usage:</strong> Hydrogen powers vehicles, industry, or generates power when needed</li>
+                    <li><strong>Nuclear:</strong> Provides reliable baseload 24/7</li>
+                </ol>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Status 2026</th>
+                            <th>Timeline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vehicles (Mirai, Nexo)</strong></td>
+                            <td>Commercial available</td>
+                            <td>50+ stations in CA, Europe, Asia</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Industry (Steel, Cement)</strong></td>
+                            <td>Pilot projects running</td>
+                            <td>Commercial deployment 2027-2030</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grid Storage</strong></td>
+                            <td>Demonstration phase</td>
+                            <td>Large-scale by 2030-2035</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shipping/Aviation</strong></td>
+                            <td>Early prototypes</td>
+                            <td>Commercial by 2035-2040</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOURCES SECTION -->
+    <div class="section-content" id="sources">
+        <div class="container">
+            <h2>
+                📚 RESEARCH SOURCES & BIBLIOGRAPHY
+                <span class="section-title-audio">
+                    <button class="audio-btn" onclick="speakText('Research sources and bibliography. Click any link to visit official government and research organizations including IEA, NREL, World Bank, and peer-reviewed academic journals.')">🔊</button>
+                </span>
+            </h2>
+
+            <!-- NUCLEAR SOURCES -->
+            <div class="detail-section">
+                <h3>⚛️ NUCLEAR ENERGY SOURCES
+                    <button class="audio-btn" onclick="speakText('Nuclear energy sources include World Nuclear Association, IAEA International Atomic Energy Agency, US Department of Energy, Nuclear Regulatory Commission, NREL, IEA, and NEA.')">🔊</button>
+                </h3>
+
+                <div class="source-category">
+                    <h3>Government & International Organizations</h3>
+                    <div class="source-item">
+                        <a href="https://www.world-nuclear.org" target="_blank">World Nuclear Association - Global Nuclear Status Report</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.iaea.org" target="_blank">IAEA (International Atomic Energy Agency) - Nuclear Energy & Technology Database</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.energy.gov/ne" target="_blank">US Department of Energy - Nuclear Energy Roadmap</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.nrc.gov/reactors/new-reactors/advanced" target="_blank">Nuclear Regulatory Commission - Advanced Reactor Highlights</a>
+                    </div>
+                </div>
+
+                <div class="source-category">
+                    <h3>Research & Analysis Reports</h3>
+                    <div class="source-item">
+                        <a href="https://www.nrel.gov/analysis/smr-cost" target="_blank">NREL - Small Modular Reactor (SMR) Cost Analysis</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.iea.org/reports/nuclear-power-in-a-clean-energy-system" target="_blank">IEA - Nuclear Power in a Clean Energy System</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.oecd-nea.org/jcms/pl_73678/nea-small-modular-reactor-smr-dashboard" target="_blank">NEA - Small Modular Reactor (SMR) Dashboard</a>
+                    </div>
+                </div>
+
+                <div class="source-category">
+                    <h3>Peer-Reviewed Research</h3>
+                    <div class="source-item">
+                        <a href="https://www.nature.com/journal/nenergy" target="_blank">Nature Energy - Peer-reviewed Nuclear Studies</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.mdpi.com/journal/energies" target="_blank">MDPI Energies Journal - Nuclear Research Papers</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIND SOURCES -->
+            <div class="detail-section">
+                <h3>💨 WIND ENERGY SOURCES
+                    <button class="audio-btn" onclick="speakText('Wind energy sources include IEA, IRENA, US Department of Energy, NREL, Global Wind Atlas, and GWEC Global Wind Energy Council.')">🔊</button>
+                </h3>
+
+                <div class="source-category">
+                    <h3>Government & International Organizations</h3>
+                    <div class="source-item">
+                        <a href="https://www.iea.org/energy-system/renewables/wind" target="_blank">IEA - Wind Energy Reports & Data</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.irena.org/energy-transformation/wind-energy" target="_blank">IRENA - International Renewable Energy Agency Wind Data</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.energy.gov/eere/wind" target="_blank">US Department of Energy - Wind Energy Program</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.nrel.gov/wind" target="_blank">NREL - National Wind Technology Center</a>
+                    </div>
+                </div>
+
+                <div class="source-category">
+                    <h3>Industry Reports</h3>
+                    <div class="source-item">
+                        <a href="https://www.globalwindatlas.info" target="_blank">Global Wind Atlas - Resource Assessment</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://gwec.net/global-wind-report-2024/" target="_blank">GWEC - Global Wind Energy Council Annual Report</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.iea.org/reports/wind-pv-and-hydropower-in-power-systems" target="_blank">IEA - Wind Integration in Power Systems</a>
+                    </div>
+                </div>
+
+                <div class="source-category">
+                    <h3>Cost & Performance Data</h3>
+                    <div class="source-item">
+                        <a href="https://www.lazard.com/research/levelized-cost-of-energy/" target="_blank">Lazard - Levelized Cost of Energy (LCOE) 2026</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://atb.nrel.gov" target="_blank">NREL Annual Technology Baseline (ATB) - Wind</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HYDROGEN SOURCES -->
+            <div class="detail-section">
+                <h3>🧪 GREEN HYDROGEN SOURCES
+                    <button class="audio-btn" onclick="speakText('Green hydrogen sources include IEA Global Hydrogen Review, US Department of Energy Hydrogen Strategy, World Bank electrolyzer research, and NREL clean hydrogen production research.')">🔊</button>
+                </h3>
+
+                <div class="source-category">
+                    <h3>Government & International Organizations</h3>
+                    <div class="source-item">
+                        <a href="https://www.iea.org/energy-system/hydrogen" target="_blank">IEA - Hydrogen Energy System Analysis</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://iea.blob.core.windows.net/assets/12d92ecc-e960-40f3-aff5-b2de6690ab6b/GlobalHydrogenReview2025.pdf" target="_blank">IEA - Global Hydrogen Review 2025</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.hydrogen.energy.gov" target="_blank">US Department of Energy - Hydrogen Strategy & Programs</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.energy.gov/eere/fuelcells" target="_blank">DOE - Fuel Cell & Hydrogen Program</a>
+                    </div>
+                </div>
+
+                <div class="source-category">
+                    <h3>World Bank & Development Research</h3>
+                    <div class="source-item">
+                        <a href="https://www.worldbank.org/en/topic/energy/publication/electrolyzers-for-hydrogen-production-technical-and-economic-characteristics" target="_blank">World Bank - Electrolyzers for Hydrogen Production</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.esmap.org/Electrolyzers_for_Hydrogen_Production" target="_blank">ESMAP - Electrolyzer Technology Assessment</a>
+                    </div>
+                </div>
+
+                <div class="source-category">
+                    <h3>NREL & Research</h3>
+                    <div class="source-item">
+                        <a href="https://www.nrel.gov/hydrogen/" target="_blank">NREL - Hydrogen Research Programs</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://docs.nrel.gov/docs/fy24osti/87216.pdf" target="_blank">NREL - Clean Hydrogen Production R&D</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/review24/ta064_sprik_2024_o.pdf" target="_blank">DOE - Hydrogen Production, Grid Integration & Scaling</a>
+                    </div>
+                </div>
+
+                <div class="source-category">
+                    <h3>Industry & Applications</h3>
+                    <div class="source-item">
+                        <a href="https://www.hydrogen-europe.eu/" target="_blank">Hydrogen Europe - Industry Association</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.fchea.org" target="_blank">Fuel Cell & Hydrogen Energy Association</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.toyota.com/mirai" target="_blank">Toyota Mirai - Hydrogen Vehicle</a>
+                    </div>
+                </div>
+
+                <div class="source-category">
+                    <h3>Peer-Reviewed Research</h3>
+                    <div class="source-item">
+                        <a href="https://www.mdpi.com/1996-1073/19/1/59" target="_blank">MDPI - Green Hydrogen Production by Electrolysis</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://www.nature.com/journal/nenergy" target="_blank">Nature Energy - Hydrogen Research Papers</a>
+                    </div>
+                    <div class="source-item">
+                        <a href="https://theicct.org/the-price-of-green-hydrogen-estimate-future-production-costs-may24/" target="_blank">ICCT - Green Hydrogen Production Cost Analysis</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conclusion-box">
+                <strong>How to Use These Sources:</strong> All sources are directly clickable links to official reports, government agencies, and peer-reviewed research. Each provides detailed data supporting the energy analysis. For homework, cite the source name and URL.
+                <br><br>
+                <button class="audio-btn" onclick="speakText('How to use these sources: All sources are directly clickable links to official reports, government agencies, and peer reviewed research. Each provides detailed data supporting the energy analysis. For homework, cite the source name and URL.')">🔊 HEAR USAGE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p><strong>Section 4.3: Harnessing Energy - Shreeth's Comprehensive Analysis</strong></p>
+        <p>A Science Project Exploring Top 3 Energy Sources for a Sustainable Future</p>
+        <p style="margin-top: 20px; font-size: 0.9em;">Based on research from IEA, NREL, World Bank, IRENA, and peer-reviewed scientific sources</p>
+        <p style="font-size: 0.85em; opacity: 0.8;">© 2026 | Created for Science Class Assignment</p>
+    </footer>
+
+    <script>
+        // Create stars for space theme
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            starsContainer.innerHTML = '';
+            const starCount = 150;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Switch between themes
+        function switchTheme(theme) {
+            document.body.className = theme + '-theme';
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            if (theme === 'space') {
+                createStars();
+            } else {
+                document.getElementById('stars').innerHTML = '';
+            }
+        }
+
+        // Show different sections
+        function showSection(sectionId) {
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Text-to-Speech function
+        function speakText(text) {
+            // Cancel any ongoing speech
+            speechSynthesis.cancel();
+            
+            // Create utterance
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Set voice properties
+            utterance.rate = 0.9; // Slower speech rate
+            utterance.pitch = 1.0; // Normal pitch
+            utterance.volume = 1.0; // Full volume
+            
+            // Add audio indicator effect
+            event.target.classList.add('playing');
+            utterance.onend = function() {
+                event.target.classList.remove('playing');
+            };
+            
+            // Speak the text
+            speechSynthesis.speak(utterance);
+        }
+
+        // Toggle page audio (read current section)
+        function togglePageAudio() {
+            const activeSection = document.querySelector('.section-content.active');
+            if (activeSection) {
+                const text = activeSection.innerText;
+                speakText(text);
+            }
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            createStars();
+        });
+
+        // Stop speech when page unloads
+        window.addEventListener('beforeunload', () => {
+            speechSynthesis.cancel();
+        });
+    </script>
+</body>
+</html>
